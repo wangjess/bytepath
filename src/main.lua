@@ -1,5 +1,4 @@
 Object = require 'libraries/classic'
-Test = require 'objects/Test'
 
 function love.load()
 	image = love.graphics.newImage('pika.png')
@@ -21,10 +20,16 @@ function recursiveEnumerate(folder, file_list)
 end
 
 function requireFiles(files)
+	print("=== FILES ===")
 	for _, file in ipairs(files) do
-		local file = file:sub(1, -5)
-		require(file)
+		moduleName = getBasename(file)
+		print(moduleName)
+		require(moduleName)
 	end
+end
+
+function getBasename(path)
+	return path:match("([^/]+)$"):match("(.+)%..+")
 end
 
 function love.update(dt)
@@ -32,7 +37,10 @@ function love.update(dt)
 end
 
 function love.draw()
-	love.graphics.draw(image, love.math.random(0,800), love.math.random(0,300))
+	if Circle then
+		local circle = Circle:new(300, 300, 50)	
+	end
+	--	love.graphics.draw(image, love.math.random(0,800), love.math.random(0,300))
 end
 
 function love.run()
