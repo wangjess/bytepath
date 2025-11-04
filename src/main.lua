@@ -1,31 +1,8 @@
 Object = require 'libraries/classic'
+Circle = require 'objects/Circle'
 
 function love.load()
 --	image = love.graphics.newImage('pika.png')
-	local object_files = {}
-	recursiveEnumerate('objects', object_files)
-	requireFiles(object_files)
-end
-
-function recursiveEnumerate(folder, file_list) 
-	local items = love.filesystem.getDirectoryItems(folder)
-	for _, item in ipairs(items) do
-		local file = folder .. '/' .. item
-		if love.filesystem.isFile(file) then
-			table.insert(file_list, file)
-		elseif love.filesystem.isDirectory(file) then
-			recursiveEnumerate(file, file_list)
-		end
-	end
-end
-
-function requireFiles(files)
-	print("=== FILES ===")
-	for _, file in ipairs(files) do
-    local file = file:sub(1, -5)
-    print(file)
-		require(file)
-	end
 end
 
 function love.update(dt)
@@ -33,7 +10,9 @@ function love.update(dt)
 end
 
 function love.draw()
-    love.graphics.circle("fill", 400, 300, 50, 64)
+--    love.graphics.circle("fill", 400, 300, 50, 64)
+    local circ = Circle:new(400, 300, 50)
+    circ:draw()
 	--	love.graphics.draw(image, love.math.random(0,800), love.math.random(0,300))
 end
 
