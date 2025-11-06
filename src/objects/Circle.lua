@@ -2,12 +2,15 @@ local Circle = {}
 Circle.__index = Circle
 
 function Circle:new(x, y, radius)
-	local self = setmetatable({}, Circle)
-	self.x = x 
-	self.y = y 
-	self.radius = radius 
-  self.creation_time = love.timer.getTime()
-	return self
+  local self = {
+    x = x,
+    y = y,
+    radius = radius,
+    creation_time = love.timer.getTime()
+  }
+  setmetatable(self, Circle)
+
+  return self
 end
 
 function Circle:update(dt)

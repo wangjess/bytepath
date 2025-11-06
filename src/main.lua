@@ -1,5 +1,6 @@
 Object = require 'libraries/classic'
 Circle = require 'objects/Circle'
+HyperCircle = require 'objects/HyperCircle'
 
 function love.load()
 --	image = love.graphics.newImage('pika.png')
@@ -10,10 +11,13 @@ function love.update(dt)
 end
 
 function love.draw()
---    love.graphics.circle("fill", 400, 300, 50, 64)
-    local circ = Circle:new(400, 300, 50)
-    circ:draw()
-	--	love.graphics.draw(image, love.math.random(0,800), love.math.random(0,300))
+  local circ = Circle:new(400, 300, 50)
+  circ:draw()
+
+  -- HyperCircle
+  local hyper = HyperCircle:new(400, 300, 50, 10, 120)
+  hyper:draw()
+  --	love.graphics.draw(image, love.math.random(0,800), love.math.random(0,300))
 end
 
 function love.run()
