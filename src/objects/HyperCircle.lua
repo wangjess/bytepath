@@ -22,7 +22,8 @@ end
 
 function HyperCircle:draw()
   love.graphics.circle("fill", self.x, self.y, self.radius, 64)
-  love.graphics.circle("line", self.x, self.y, self.outer_radius, self.line_width)
+  love.graphics.setLineWidth(self.line_width)
+  love.graphics.circle("line", self.x, self.y, self.outer_radius)
 end
 
 return HyperCircle
