@@ -11,8 +11,8 @@ function love.update(dt)
 end
 
 function love.draw()
-  local circ = Circle:new(400, 300, 50)
-  circ:draw()
+--  local circ = Circle:new(400, 300, 50)
+--  circ:draw()
 
   -- HyperCircle
   local hyper = HyperCircle:new(400, 300, 50, 10, 120)

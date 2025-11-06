@@ -21,6 +21,8 @@ function HyperCircle:update(dt)
 end
 
 function HyperCircle:draw()
---  love.graphics.circle("fill", obj.x, obj.y, obj.radius, 64)
---  love.graphics.circle("line", obj.line_width, obj.outer_radius)
+  love.graphics.circle("fill", self.x, self.y, self.radius, 64)
+  love.graphics.circle("line", self.x, self.y, self.outer_radius, self.line_width)
 end
+
+return HyperCircle
