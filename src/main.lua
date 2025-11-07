@@ -1,9 +1,39 @@
-Object = require 'libraries/classic'
-Circle = require 'objects/Circle'
-HyperCircle = require 'objects/HyperCircle'
+-- Object = require 'libraries/classic'
+-- Circle = require 'objects/Circle'
+-- HyperCircle = require 'objects/HyperCircle'
 
 function love.load()
 --	image = love.graphics.newImage('pika.png')
+  local object_files = {}
+  local library_files = {}
+
+  -- Get all library files
+  recursiveEnumerate('libraries', library_files)
+  requireFiles(library_files)
+  
+  -- Get all object files
+  recursiveEnumerate('objects', object_files)
+  requireFiles(object_files)
+end
+
+function requireFiles(files)
+  for _, file in ipairs(files) do
+    local file = file:sub(1, -5)
+    print("file:", file)
+    require(file)
+  end
+end
+
+function recursiveEnumerate(folder, file_list) 
+  local items = love.filesystem.getDirectoryItems(folder)
+  for _, item in ipairs(items) do
+    local file = folder .. '/' .. item
+    if love.filesystem.isFile(file) then
+      table.insert(file_list, file)
+    elseif love.filesystem.isDirectory(file) then
+      recursiveEnumerate(file, file_list)
+    end
+  end
 end
 
 function love.update(dt)
@@ -11,6 +41,7 @@ function love.update(dt)
 end
 
 function love.draw()
+  --  Circle
 --  local circ = Circle:new(400, 300, 50)
 --  circ:draw()
 
