@@ -1,3 +1,5 @@
+local Circle = require("objects/Circle")
+
 local HyperCircle = {}
 HyperCircle.__index = HyperCircle
 setmetatable(HyperCircle, {__index = Circle}) -- this is different!

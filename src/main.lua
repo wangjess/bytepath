@@ -1,6 +1,5 @@
--- Object = require 'libraries/classic'
--- Circle = require 'objects/Circle'
--- HyperCircle = require 'objects/HyperCircle'
+-- Stores the class objects
+classes = {}
 
 function love.load()
 --	image = love.graphics.newImage('pika.png')
@@ -14,13 +13,24 @@ function love.load()
   -- Get all object files
   recursiveEnumerate('objects', object_files)
   requireFiles(object_files)
+
 end
 
 function requireFiles(files)
   for _, file in ipairs(files) do
     local file = file:sub(1, -5)
-    print("file:", file)
-    require(file)
+    local name = file:match("([^/]+)$")
+    
+    -- Add the class to our dictionary
+    local class = require(file)
+    
+    -- Error checking for failures, quit if error occurs
+    local ok, mod = pcall(require, file)
+    if not ok then
+      os.exit(1)
+    end
+
+    classes[name] = class
   end
 end
 
@@ -41,12 +51,19 @@ function love.update(dt)
 end
 
 function love.draw()
+  -- Check package.preload
+  print "=== package.preload ==="
+  for k, v in pairs(package.preload) do
+    local kind = type(v) == "function" and "function" or type(v)
+    print(string.format("%-30s %s", k, kind))
+  end
+ 
   --  Circle
---  local circ = Circle:new(400, 300, 50)
---  circ:draw()
+  local circ = classes.Circle:new(400, 300, 50)
+  circ:draw()
 
   -- HyperCircle
-  local hyper = HyperCircle:new(400, 300, 50, 10, 120)
+  local hyper = classes.HyperCircle:new(400, 300, 50, 10, 120)
   hyper:draw()
   --	love.graphics.draw(image, love.math.random(0,800), love.math.random(0,300))
 end
