@@ -2,7 +2,6 @@
 classes = {}
 
 function love.load()
---	image = love.graphics.newImage('pika.png')
   local object_files = {}
   local library_files = {}
 
@@ -51,13 +50,6 @@ function love.update(dt)
 end
 
 function love.draw()
-  -- Check package.preload
-  print "=== package.preload ==="
-  for k, v in pairs(package.preload) do
-    local kind = type(v) == "function" and "function" or type(v)
-    print(string.format("%-30s %s", k, kind))
-  end
- 
   --  Circle
   local circ = classes.Circle:new(400, 300, 50)
   circ:draw()
@@ -65,7 +57,6 @@ function love.draw()
   -- HyperCircle
   local hyper = classes.HyperCircle:new(400, 300, 50, 10, 120)
   hyper:draw()
-  --	love.graphics.draw(image, love.math.random(0,800), love.math.random(0,300))
 end
 
 function love.run()
