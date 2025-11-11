@@ -1,3 +1,6 @@
+Input = require('libraries/Input')
+Timer = require('libraries/hump/timer')
+
 -- Stores the class objects
 classes = {}
 
@@ -13,8 +16,27 @@ function love.load()
   recursiveEnumerate('objects', object_files)
   requireFiles(object_files)
 
+  -- Global timer object
+  timer = Timer()
+  input = Input()
+
+  -- Testing timer functions:
+--  timer:after(2, function() print(love.math.random()) end)
+--  timer:every(1, function() print("yo") end, 5) -- stops after 5 occurrences
+--  timer:after(1, function(f)
+--        print(love.math.random())
+--        timer:after(1, f)
+--  end)
+    
+  -- Tween
+  circle = {radius = 24}
+  timer:tween(6, circle, {radius = 96}, 'in-out-cubic')
+
+--  input:bind('mouse1', 'test')
+--  input:bind('mouse1', function() print(love.math.random()) end)
 end
 
+-- Imports the files
 function requireFiles(files)
   for _, file in ipairs(files) do
     local file = file:sub(1, -5)
@@ -33,6 +55,7 @@ function requireFiles(files)
   end
 end
 
+-- Recursively iterates through directories
 function recursiveEnumerate(folder, file_list) 
   local items = love.filesystem.getDirectoryItems(folder)
   for _, item in ipairs(items) do
@@ -46,17 +69,20 @@ function recursiveEnumerate(folder, file_list)
 end
 
 function love.update(dt)
-
+  timer:update(dt)
 end
 
 function love.draw()
   --  Circle
-  local circ = classes.Circle:new(400, 300, 50)
-  circ:draw()
+--  local circ = classes.Circle:new(400, 300, 50)
+--  circ:draw()
 
   -- HyperCircle
-  local hyper = classes.HyperCircle:new(400, 300, 50, 10, 120)
-  hyper:draw()
+--  local hyper = classes.HyperCircle:new(400, 300, 50, 10, 120)
+--  hyper:draw()
+
+  -- Tween visual testing
+  love.graphics.circle('fill', 400, 300, circle.radius)
 end
 
 function love.run()
