@@ -19,21 +19,25 @@ function love.load()
   -- Global timer object
   timer = Timer()
   input = Input()
-
-  -- Testing timer functions:
---  timer:after(2, function() print(love.math.random()) end)
---  timer:every(1, function() print("yo") end, 5) -- stops after 5 occurrences
---  timer:after(1, function(f)
---        print(love.math.random())
---        timer:after(1, f)
---  end)
     
-  -- Tween
+  -- Circle Tween Exercise
   circle = {radius = 24}
   timer:tween(6, circle, {radius = 96}, 'in-out-cubic')
 
---  input:bind('mouse1', 'test')
---  input:bind('mouse1', function() print(love.math.random()) end)
+  -- Plus-Sign Tween Exercise
+  rect_1 = {x = 400, y = 300, w = 50, h = 200}
+  rect_2 = {x = 400, y = 300, w = 200, h = 50}
+  
+  timer:after(1, function()
+    timer:tween(1, rect_1, {w = 0}, 'in-out-cubic', function()
+      timer:after(0.3, function()
+        timer:tween(1, rect_2, {h = 0}, 'in-out-cubic', function()
+         timer:tween(1, rect_1, {w = 50}, 'in-out-cubic')
+         timer:tween(1, rect_2, {h = 50}, 'in-out-cubic')
+      end)
+     end)
+    end)
+  end)
 end
 
 -- Imports the files
@@ -81,8 +85,12 @@ function love.draw()
 --  local hyper = classes.HyperCircle:new(400, 300, 50, 10, 120)
 --  hyper:draw()
 
-  -- Tween visual testing
-  love.graphics.circle('fill', 400, 300, circle.radius)
+  -- Circle Tween 
+  -- love.graphics.circle('fill', 400, 300, circle.radius)
+
+  -- Plus-Sign Tween 
+  love.graphics.rectangle('fill', rect_1.x - rect_1.w/2, rect_1.y - rect_1.h/2, rect_1.w, rect_1.h)
+  love.graphics.rectangle('fill', rect_2.x - rect_2.w/2, rect_2.y - rect_2.h/2, rect_2.w, rect_2.h)
 end
 
 function love.run()
