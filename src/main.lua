@@ -38,6 +38,17 @@ function love.load()
      end)
     end)
   end)
+
+  -- HP Bar Tweening Exercise
+  lag_hp_bar = {x = 300, y = 300, w = 200, h = 50}
+  hp_bar = {x = 300, y = 300, w = 200, h = 50}
+  input:bind('d', function() timer:tween(1, hp_bar, {w = hp_bar.w - 50}, 'in-out-cubic', function()
+    timer:after(0.5, function()
+      timer:tween(1, lag_hp_bar, {w = lag_hp_bar.w - 50}, 'in-out-cubic')
+    end)
+    end) 
+  end)
+
 end
 
 -- Imports the files
@@ -89,8 +100,16 @@ function love.draw()
   -- love.graphics.circle('fill', 400, 300, circle.radius)
 
   -- Plus-Sign Tween 
-  love.graphics.rectangle('fill', rect_1.x - rect_1.w/2, rect_1.y - rect_1.h/2, rect_1.w, rect_1.h)
-  love.graphics.rectangle('fill', rect_2.x - rect_2.w/2, rect_2.y - rect_2.h/2, rect_2.w, rect_2.h)
+--  love.graphics.rectangle('fill', rect_1.x - rect_1.w/2, rect_1.y - rect_1.h/2, rect_1.w, rect_1.h)
+--  love.graphics.rectangle('fill', rect_2.x - rect_2.w/2, rect_2.y - rect_2.h/2, rect_2.w, rect_2.h)
+
+  -- HP Bar Tween
+  love.graphics.setColor(1, 0.502, 0.502, 1) -- lighter red
+  love.graphics.rectangle('fill', lag_hp_bar.x, lag_hp_bar.y, lag_hp_bar.w, lag_hp_bar.h)
+
+  love.graphics.setColor(255, 0, 0) -- bright red
+  love.graphics.rectangle('fill', hp_bar.x, hp_bar.y, hp_bar.w, hp_bar.h)
+
 end
 
 function love.run()
