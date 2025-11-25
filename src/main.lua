@@ -22,7 +22,13 @@ function love.load()
     
   -- Circle Tween Exercise
   circle = {radius = 24}
-  timer:tween(6, circle, {radius = 96}, 'in-out-cubic')
+  timer:tween(6, circle, {radius = 96}, 'in-out-cubic', function()
+    timer:after(1, function()
+      timer:tween(6, circle, {radius = 24}, 'in-out-cubic', function()
+      timer:tween(6, circle, {radius = 96}, 'in-out-cubic')
+      end)
+    end)
+  end)
 
   -- Plus-Sign Tween Exercise
   rect_1 = {x = 400, y = 300, w = 50, h = 200}
@@ -97,18 +103,17 @@ function love.draw()
 --  hyper:draw()
 
   -- Circle Tween 
-  -- love.graphics.circle('fill', 400, 300, circle.radius)
+  love.graphics.circle('fill', 400, 300, circle.radius)
 
   -- Plus-Sign Tween 
 --  love.graphics.rectangle('fill', rect_1.x - rect_1.w/2, rect_1.y - rect_1.h/2, rect_1.w, rect_1.h)
 --  love.graphics.rectangle('fill', rect_2.x - rect_2.w/2, rect_2.y - rect_2.h/2, rect_2.w, rect_2.h)
 
   -- HP Bar Tween
-  love.graphics.setColor(1, 0.502, 0.502, 1) -- lighter red
-  love.graphics.rectangle('fill', lag_hp_bar.x, lag_hp_bar.y, lag_hp_bar.w, lag_hp_bar.h)
-
-  love.graphics.setColor(255, 0, 0) -- bright red
-  love.graphics.rectangle('fill', hp_bar.x, hp_bar.y, hp_bar.w, hp_bar.h)
+--  love.graphics.setColor(1, 0.502, 0.502, 1) -- lighter red
+--  love.graphics.rectangle('fill', lag_hp_bar.x, lag_hp_bar.y, lag_hp_bar.w, lag_hp_bar.h)
+--  love.graphics.setColor(255, 0, 0) -- bright red
+--  love.graphics.rectangle('fill', hp_bar.x, hp_bar.y, hp_bar.w, hp_bar.h)
 
 end
 
